@@ -1,0 +1,18 @@
+{
+  "name": "open-data-jp-railway-stations",
+  "version": "1.0.0",
+  "description": "List of Japanese railway stations in an accessible format",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --watch index.js --watch model"
+  },
+  "author": "Fabio Crisci",
+  "license": "MIT",
+  "devDependencies": {
+    "csv-parse": "^2.5.0",
+    "got": "^9.0.0",
+    "open-data-jp-railway-lines": "github:piuccio/open-data-jp-railway-lines",
+    "open-data-jp-tokyo-railway-operators": "github:piuccio/open-data-jp-tokyo-railway-operators"
+  }
+}
