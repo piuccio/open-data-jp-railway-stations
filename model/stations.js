@@ -70,6 +70,7 @@ class Group {
     const ekidata_line_ids = [];
     const line_codes = [];
 
+    const prefecturesMap = {};
     this.stations.forEach((station) => {
       if (!distribution[station.name_kanji]) {
         distribution[station.name_kanji] = {
@@ -82,11 +83,14 @@ class Group {
       if (!ekidata_line_ids.includes(station.ekidata_line_id)) ekidata_line_ids.push(station.ekidata_line_id);
       if (station.line_code && !line_codes.includes(station.line_code)) line_codes.push(station.line_code);
       stationsAsJson.push(station.toJson());
+      prefecturesMap[station.prefecture] = true;
     });
     const mostCommon = getMostCommon(Object.entries(distribution));
     const name_kanji = mostCommon[0];
     const name_romaji = findIn(mostCommon[1].objects, 'name_romaji');
     const name_kana = findIn(mostCommon[1].objects, 'name_kana');
+    const prefectures = Object.keys(prefecturesMap);
+    if (prefectures.length !== 1) console.log(`Station group ${this.group_code} has multiple prefectures ${prefectures.join(', ')}`);
 
     return {
       name_kanji,
@@ -97,7 +101,8 @@ class Group {
       ekidata_line_ids,
       line_codes,
       stations: stationsAsJson,
-    }
+      prefecture: prefectures[0],
+    };
   }
 }
 
@@ -162,6 +167,7 @@ class Station {
     this.openStation = openStation;
     this.ekidata_line_id = station.line_cd;
     this.line_code = openStation ? openStation['odpt:railway'].substring(RAILWAY_PREFIX) : '';
+    this.prefecture = this.station.pref_cd.padStart(2, '0');
   }
 
   toJson()/*: StationObject */ {
@@ -180,7 +186,7 @@ class Station {
       line_code: this.line_code,
       short_code: this.openStation ? this.openStation['odpt:stationCode'] : '',
       // location
-      prefecture: this.station.pref_cd.padStart(2, '0'),
+      prefecture: this.prefecture,
       lat: this.lat,
       lon: this.lon,
     };

@@ -10,8 +10,8 @@
   "author": "Fabio Crisci",
   "license": "MIT",
   "devDependencies": {
-    "csv-parse": "^2.5.0",
-    "got": "^9.0.0",
+    "csv-parse": "^3.0.0",
+    "got": "^9.2.1",
     "open-data-jp-railway-lines": "github:piuccio/open-data-jp-railway-lines",
     "open-data-jp-tokyo-railway-operators": "github:piuccio/open-data-jp-tokyo-railway-operators"
   }
